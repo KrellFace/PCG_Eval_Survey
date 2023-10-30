@@ -12,6 +12,7 @@ def generate_histogram(columns, counts, title, filename, horizontal = True, colo
     
     fig, ax = plt.subplots()
 
+    #Plotting normal vertical bars
     if(horizontal):
         ax.bar(columns, counts, color = colour)
         ax.set_ylabel('Frequency', fontsize=20)
@@ -23,6 +24,7 @@ def generate_histogram(columns, counts, title, filename, horizontal = True, colo
         bottom, top = plt.ylim()
         plt.ylim(bottom, top+5) 
         plt.yticks(fontsize=14)
+    #Plotting horizontal bars
     else:
         """
         barpos = []
@@ -41,7 +43,7 @@ def generate_histogram(columns, counts, title, filename, horizontal = True, colo
 
         for rect in ax.patches:
             width = rect.get_width()
-            ax.annotate(f'{int(width)}', xy=(width+.5, rect.get_y()+rect.get_height()-.2), 
+            ax.annotate(f'{int(width)}', xy=(width+1.4, rect.get_y()+rect.get_height()+.2), 
                         xytext=(0, 5), textcoords='offset points', ha='center', va='bottom')
         min, max = plt.xlim()
         plt.xlim(min, max+5) 
@@ -52,8 +54,8 @@ def generate_histogram(columns, counts, title, filename, horizontal = True, colo
     ax.set_title(title, fontsize=30)
 
     plt.tight_layout()
-    plt.show()
-    #plt.savefig('output/'+filename)
+    #plt.show()
+    plt.savefig('output/'+filename)
 
 def main():
     #full_data = pd.read_csv(inputFile, skiprows=[1,2],header=[3])
@@ -61,8 +63,8 @@ def main():
 
     print(full_data.head)
 
-    df_filtered1 = full_data[full_data['Paper Accessible?'] == 'Yes']
-    df_filtered2 = df_filtered1[df_filtered1['Introduces novel PCG system for game levels or Virtual Environments'] == 'Yes']
+    #df_filtered1 = full_data[full_data['Paper Accessible?'] == 'Yes']
+    #df_filtered2 = df_filtered1[df_filtered1['Introduces novel PCG system for game levels or Virtual Environments'] == 'Yes']
 
     filtered_df = full_data.loc[(full_data['G1'] == 'Yes') & (full_data['G2'] == 'Yes')]
 
@@ -72,14 +74,14 @@ def main():
     methods_only = filtered_df[['M1', 'M2', 'M3', 'M4']]
     methods = ['Representation\nDirect', 'Human\nPlay', 'Agent\nPlay', 'MI\nCreation']
     method_counts = [methods_only['M1'].value_counts()['Yes'], methods_only['M2'].value_counts()['Yes'], methods_only['M3'].value_counts()['Yes'], methods_only['M4'].value_counts()['Yes']]
-    #generate_histogram(methods, method_counts, "Methods Used for Evaluation", "EvalMethods", True, "powderblue")
+    generate_histogram(methods, method_counts, "Methods Used for Evaluation", "EvalMethods", True, "powderblue")
 
     
     point_of_comparison = filtered_df[['C1', 'C2', 'C3', 'C4', 'C5', 'C6']]
     poc = ['With Algorithm\nvs Without', 'Alt\nParameters', 'Alt\nAlgorithms',  'System from\nPrior Research', 'Multiple\nGenerators Contrasted', 'Exemplar\nContent' ]
     poc_counts = [point_of_comparison['C1'].value_counts()['Yes'], point_of_comparison['C2'].value_counts()['Yes'], 
                   point_of_comparison['C3'].value_counts()['Yes'], point_of_comparison['C4'].value_counts()['Yes'], point_of_comparison['C5'].value_counts()['Yes'], point_of_comparison['C6'].value_counts()['Yes']]
-    #generate_histogram(poc, poc_counts, "Points of Comparison", 'CompPoints', True, "orange")
+    generate_histogram(poc, poc_counts, "Points of Comparison", 'CompPoints', True, "orange")
     
 
     features_only = filtered_df[['CM1','CM2','CM3','CM4','CM5','CM6','CM7','CM8','CM9','CM10','CM11','CM12']]
