@@ -13,9 +13,9 @@ def generate_histogram(columns, counts, title, filename, horizontal = True, colo
     fig, ax = plt.subplots()
 
     #Plotting normal vertical bars
-    if(horizontal):
+    if(not horizontal):
         ax.bar(columns, counts, color = colour)
-        ax.set_ylabel('Frequency', fontsize=20)
+        #ax.set_ylabel('Frequency', fontsize=20)
         plt.grid(axis='y')
         for rect in ax.patches:
             height = rect.get_height()
@@ -24,6 +24,7 @@ def generate_histogram(columns, counts, title, filename, horizontal = True, colo
         bottom, top = plt.ylim()
         plt.ylim(bottom, top+5) 
         plt.yticks(fontsize=14)
+        plt.xticks(fontsize=12, rotation='vertical')
     #Plotting horizontal bars
     else:
         """
@@ -37,7 +38,7 @@ def generate_histogram(columns, counts, title, filename, horizontal = True, colo
 
         ax.barh( columns, counts, color = colour)
         ax.invert_yaxis()
-        ax.set_xlabel('Frequency', fontsize=20)
+        #ax.set_xlabel('Frequency', fontsize=20)
         plt.grid(axis='x')
 
 
@@ -47,11 +48,11 @@ def generate_histogram(columns, counts, title, filename, horizontal = True, colo
                         xytext=(0, 5), textcoords='offset points', ha='center', va='bottom')
         min, max = plt.xlim()
         plt.xlim(min, max+5) 
-        plt.yticks(fontsize=10)
+        plt.yticks(fontsize=8)
+        plt.xticks(fontsize=6, rotation='vertical')
 
         
-    plt.xticks(fontsize=14, rotation='vertical')
-    ax.set_title(title, fontsize=30)
+    ax.set_title(title, fontsize=18)
 
     plt.tight_layout()
     #plt.show()
@@ -74,26 +75,26 @@ def main():
     methods_only = filtered_df[['M1', 'M2', 'M3', 'M4']]
     methods = ['Representation\nDirect', 'Human\nPlay', 'Agent\nPlay', 'MI\nCreation']
     method_counts = [methods_only['M1'].value_counts()['Yes'], methods_only['M2'].value_counts()['Yes'], methods_only['M3'].value_counts()['Yes'], methods_only['M4'].value_counts()['Yes']]
-    generate_histogram(methods, method_counts, "Methods Used for Evaluation", "EvalMethods", True, "powderblue")
+    generate_histogram(methods, method_counts, "Methods Used for Evaluation", "EvalMethods", False, "powderblue")
 
     
     point_of_comparison = filtered_df[['C1', 'C2', 'C3', 'C4', 'C5', 'C6']]
-    poc = ['With Algorithm\nvs Without', 'Alt\nParameters', 'Alt\nAlgorithms',  'System from\nPrior Research', 'Multiple\nGenerators Contrasted', 'Exemplar\nContent' ]
+    poc = ['With Algorithm\nvs Without', 'Alt\nParameters', 'Alt\nAlgorithms',  'System from\nPrior Research', 'Multiple\nGenerators', 'Exemplar\nContent' ]
     poc_counts = [point_of_comparison['C1'].value_counts()['Yes'], point_of_comparison['C2'].value_counts()['Yes'], 
                   point_of_comparison['C3'].value_counts()['Yes'], point_of_comparison['C4'].value_counts()['Yes'], point_of_comparison['C5'].value_counts()['Yes'], point_of_comparison['C6'].value_counts()['Yes']]
-    generate_histogram(poc, poc_counts, "Points of Comparison", 'CompPoints', True, "orange")
+    generate_histogram(poc, poc_counts, "Points of Comparison", 'CompPoints', False, "orange")
     
 
     features_only = filtered_df[['CM1','CM2','CM3','CM4','CM5','CM6','CM7','CM8','CM9','CM10','CM11','CM12']]
-    features = ['Fitness', 'Playability/\nWin Rate', 'Validated\nQuestionnaire', 'Custom\nQuestions', 'Biological\nReadings' , 'Computational Performance\nof Generator', 'Qualatative\nVisual Traits\nof a Sample', 	
-                'Metric\nDiversity', 'Similarity to\ntraining levels',  'ERA'	,'Controllability', 'Performance\nas RL Curiculum']
+    features = ['Fitness', 'Playability/\nWin Rate', 'Validated\nQuestionnaire', 'Custom\nQuestions', 'Biological\nReadings' , 'Computational Performance', 'Visual Traits\nof Sample', 	
+                'Metric\nDiversity', 'Training levels\nSimilarity',  'ERA'	,'Controllability', 'RL Curiculum\nPerformance']
     features_counts = [features_only['CM1'].value_counts()['Yes'],features_only['CM2'].value_counts()['Yes'],features_only['CM3'].value_counts()['Yes'],features_only['CM4'].value_counts()['Yes'],features_only['CM5'].value_counts()['Yes'],features_only['CM6'].value_counts()['Yes'],features_only['CM7'].value_counts()['Yes'],features_only['CM8'].value_counts()['Yes'],features_only['CM9'].value_counts()['Yes'],features_only['CM10'].value_counts()['Yes'],features_only['CM11'].value_counts()['Yes'],features_only['CM12'].value_counts()['Yes']]
-    generate_histogram(features, features_counts, "Features Used for Comparison", 'Features', False, "lightcoral")
+    generate_histogram(features, features_counts, "Features Used for Comparison", 'Features', True, "lightcoral")
 
-    domain_type_only = filtered_df[['DO1', 'DO2', 'DO3']]
-    domain_types = ['Commercial Game\nor Mod', 'Pre-Existing\nResearch Platform', 'Original\nSystem']
-    domain_counts = [domain_type_only['DO1'].value_counts()['Yes'],domain_type_only['DO3'].value_counts()['Yes'],domain_type_only['DO2'].value_counts()['Yes']]
-    generate_histogram(domain_types, domain_counts, "Domain Types Observed", 'DomainTypes', True, "pink")
+    domain_type_only = filtered_df[['DO1', 'DO2', 'DO3', 'GD1','GD2']]
+    domain_types = ['Commercial Game\nor Mod', 'Pre-Existing\nResearch Platform', 'Original\nSystem', 'Mario AI\nFramework','GVGAI']
+    domain_counts = [domain_type_only['DO1'].value_counts()['Yes'],domain_type_only['DO3'].value_counts()['Yes'],domain_type_only['DO2'].value_counts()['Yes'],domain_type_only['GD1'].value_counts()['Yes'],domain_type_only['GD2'].value_counts()['Yes']]
+    generate_histogram(domain_types, domain_counts, "Domain Types Observed", 'DomainTypes', False, "pink")
     
 
 
