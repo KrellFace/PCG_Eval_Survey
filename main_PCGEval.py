@@ -75,7 +75,7 @@ def main():
     methods_only = filtered_df[['M1', 'M2', 'M3', 'M4']]
     methods = ['Representation\nDirect', 'Human\nPlay', 'Agent\nPlay', 'MI\nCreation']
     method_counts = [methods_only['M1'].value_counts()['Yes'], methods_only['M2'].value_counts()['Yes'], methods_only['M3'].value_counts()['Yes'], methods_only['M4'].value_counts()['Yes']]
-    generate_histogram(methods, method_counts, "Methods Used for Evaluation", "EvalMethods", False, "powderblue")
+    generate_histogram(methods, method_counts, "Method of Data Extraction", "Methods", False, "powderblue")
 
     
     point_of_comparison = filtered_df[['C1', 'C2', 'C3', 'C4', 'C5', 'C6']]
