@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 
-inputFile = 'Data/PCG Survey - Annotated V1.csv'
+inputFile = 'Data/PCG Survey - Annotated.csv'
 
 
 def generate_histogram(columns, counts, title, filename, horizontal = True, colour = "lightblue"):
